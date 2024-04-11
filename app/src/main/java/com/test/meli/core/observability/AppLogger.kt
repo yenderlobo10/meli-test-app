@@ -1,9 +1,9 @@
-package com.test.meli.common.observability
+package com.test.meli.core.observability
 
 
 import com.test.meli.BuildConfig
-import com.test.meli.common.observability.timber.AppLoggerTimber
-import com.test.meli.common.observability.timber.AppTimberReleaseTree
+import com.test.meli.core.observability.timber.AppLoggerTimber
+import com.test.meli.core.observability.timber.AppTimberReleaseTree
 import timber.log.Timber
 
 

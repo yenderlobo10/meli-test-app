@@ -1,4 +1,4 @@
-package com.test.meli.common.presentation.theme
+package com.test.meli.core.presentation.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.test.meli.common.navigation
+package com.test.meli.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

@@ -1,4 +1,4 @@
-package com.test.meli.common.navigation
+package com.test.meli.core.navigation
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

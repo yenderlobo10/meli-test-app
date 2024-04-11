@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.test.meli.common.navigation.AppNavigationHost
-import com.test.meli.common.navigation.AppNavigator
-import com.test.meli.common.presentation.theme.AppTheme
+import com.test.meli.core.navigation.AppNavigationHost
+import com.test.meli.core.navigation.AppNavigator
+import com.test.meli.core.presentation.theme.AppTheme
 import org.koin.android.ext.android.get
 
 class MainActivity : ComponentActivity() {

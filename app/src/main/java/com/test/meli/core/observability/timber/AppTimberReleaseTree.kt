@@ -1,4 +1,4 @@
-package com.test.meli.common.observability.timber
+package com.test.meli.core.observability.timber
 
 import timber.log.Timber
 

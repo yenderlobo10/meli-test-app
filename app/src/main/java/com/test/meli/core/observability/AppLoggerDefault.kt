@@ -1,4 +1,4 @@
-package com.test.meli.common.observability
+package com.test.meli.core.observability
 
 /**
  * Represent a contract to implement a Logger.
