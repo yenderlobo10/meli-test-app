@@ -1,20 +1,14 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.test.meli.catalog.presentation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MediumTopAppBar
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,10 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.test.meli.R
 import com.test.meli.catalog.domain.ProductItem
 import com.test.meli.catalog.presentation.common.productsPrev
-import com.test.meli.catalog.presentation.components.CatalogErrorContent
-import com.test.meli.catalog.presentation.components.CatalogListView
-import com.test.meli.catalog.presentation.components.CatalogLoadingContent
+import com.test.meli.catalog.presentation.components.ListView
 import com.test.meli.core.extensions.capitalize
+import com.test.meli.core.presentation.components.AppTopBarScaffold
+import com.test.meli.core.presentation.components.ErrorView
+import com.test.meli.core.presentation.components.LoadingView
 import com.test.meli.core.presentation.theme.AppTheme
 
 @Composable
@@ -43,7 +38,10 @@ fun CatalogScreen(
         query = query,
         isLoading = catalogState.isLoading,
         isError = catalogState.isError,
-        products = catalogState.products
+        products = catalogState.products,
+        onProductItemClick = {
+            catalogViewModel.navigateToProductDetail(it)
+        }
     )
 }
 
@@ -53,70 +51,51 @@ private fun CatalogScaffold(
     query: String,
     isLoading: Boolean,
     isError: Boolean,
-    products: List<ProductItem>
+    products: List<ProductItem>,
+    onProductItemClick: (item: ProductItem) -> Unit
 ) {
-    val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+        rememberTopAppBarState()
+    )
 
-    Scaffold(
+    AppTopBarScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopBar(
-                query = query,
-                visible = true,
-                scrollBehavior = scrollBehavior
-            )
+        title = query.capitalize(),
+        onNavigationIconClick = { /*TODO*/ },
+        scrollBehavior = scrollBehavior,
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_grid_view),
+                    contentDescription = "view-mode-icon"
+                )
+            }
         }
     ) { innerPadding ->
         Surface(Modifier.padding(innerPadding)) {
             when {
-                isLoading -> CatalogLoadingContent()
-                isError -> CatalogErrorContent(message = "Error!")
-                else -> CatalogContent(
-                    products = products
+                isLoading -> LoadingView()
+
+                isError -> ErrorView(message = "Error!")
+
+                else -> CatalogView(
+                    products = products,
+                    onItemClick = onProductItemClick
                 )
             }
         }
     }
 }
 
-@Composable
-private fun TopBar(
-    query: String,
-    visible: Boolean,
-    scrollBehavior: TopAppBarScrollBehavior
-) {
-    if (visible)
-        MediumTopAppBar(
-            navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = "nav-back-icon"
-                    )
-                }
-            },
-            title = ColumnScope@{
-                Text(text = query.capitalize())
-            },
-            actions = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_grid_view),
-                        contentDescription = "view-mode-icon"
-                    )
-                }
-            },
-            scrollBehavior = scrollBehavior
-        )
-}
 
 @Composable
-fun CatalogContent(
-    products: List<ProductItem>
+fun CatalogView(
+    products: List<ProductItem>,
+    onItemClick: (item: ProductItem) -> Unit
 ) {
-    CatalogListView(
-        items = products
+    ListView(
+        items = products,
+        onItemClick = onItemClick
     )
 }
 
@@ -129,7 +108,8 @@ private fun CatalogScaffoldPrev() {
             query = "query input search",
             isLoading = true,
             isError = true,
-            products = productsPrev
+            products = productsPrev,
+            onProductItemClick = {}
         )
     }
 }
@@ -138,8 +118,9 @@ private fun CatalogScaffoldPrev() {
 @Composable
 private fun CatalogContentPrev() {
     Surface {
-        CatalogContent(
-            products = productsPrev
+        CatalogView(
+            products = productsPrev,
+            onItemClick = {}
         )
     }
 }

@@ -12,6 +12,6 @@ class CatalogRepositoryImpl(
 
         return catalog.results.map {
             it.toProductItem()
-        }.toList()
+        }
     }
 }

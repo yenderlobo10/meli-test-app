@@ -1,4 +1,4 @@
-package com.test.meli.catalog.presentation.components
+package com.test.meli.core.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,9 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-internal fun CatalogLoadingContent() {
+fun LoadingView(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        Modifier.fillMaxSize(),
+        modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
@@ -23,6 +25,6 @@ internal fun CatalogLoadingContent() {
 @Composable
 private fun CatalogLoadingContentPrev() {
     Surface {
-        CatalogLoadingContent()
+        LoadingView()
     }
 }

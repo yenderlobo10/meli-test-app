@@ -1,7 +1,7 @@
 package com.test.meli.catalog.presentation.common
 
 import com.test.meli.catalog.domain.ProductItem
-import java.util.UUID
+import com.test.meli.core.utils.getGuid
 
 internal val productItemPrev = ProductItem(
     id = "MCO123456",
@@ -12,6 +12,6 @@ internal val productItemPrev = ProductItem(
 
 internal val productsPrev = (1..10).map {
     productItemPrev.copy(
-        id = UUID.randomUUID().toString()
+        id = getGuid()
     )
 }

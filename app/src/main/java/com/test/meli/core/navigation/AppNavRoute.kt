@@ -12,12 +12,12 @@ sealed class AppNavRoute(
         path = "${AppRoutes.Catalog.label}/$query"
     )
 
-    data object ProductDetail : AppNavRoute(
-        path = AppRoutes.ProductDetail.label
+    data class ProductDetail(val id: String) : AppNavRoute(
+        path = "${AppRoutes.ProductDetail.label}/$id"
     )
 }
 
-enum class AppRoutes(val label:String){
+enum class AppRoutes(val label: String) {
     Search(label = "search"),
     Catalog(label = "catalog"),
     ProductDetail(label = "detail")

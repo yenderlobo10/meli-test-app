@@ -36,15 +36,15 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.test.meli.R
 import com.test.meli.catalog.domain.ProductItem
-import com.test.meli.catalog.presentation.CatalogContent
 import com.test.meli.catalog.presentation.common.productItemPrev
 import com.test.meli.catalog.presentation.common.productsPrev
 import com.test.meli.core.extensions.capitalizeWords
 import com.test.meli.core.extensions.toCurrencyFormat
 
 @Composable
-internal fun CatalogListView(
-    items: List<ProductItem>
+internal fun ListView(
+    items: List<ProductItem>,
+    onItemClick: (item: ProductItem) -> Unit
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -59,19 +59,23 @@ internal fun CatalogListView(
             items,
             key = { it.id }
         ) {
-            CatalogListItem(item = it)
+            ListItem(
+                item = it,
+                onClick = { onItemClick(it) }
+            )
         }
     }
 }
 
 @Composable
-private fun CatalogListItem(
-    item: ProductItem
+private fun ListItem(
+    item: ProductItem,
+    onClick: () -> Unit
 ) {
     ConstraintLayout(
         Modifier
             .fillMaxWidth()
-            .clickable { /*TODO*/ }
+            .clickable { onClick() }
     ) {
         val (image, title, price, buttonFavorite, divider) = createRefs()
         var imageScaling by remember { mutableStateOf(ContentScale.Inside) }
@@ -144,20 +148,22 @@ private fun CatalogListItem(
 
 @Preview
 @Composable
-private fun CatalogContentPrev() {
+private fun ListViewPrev() {
     Surface {
-        CatalogContent(
-            products = productsPrev
+        ListView(
+            items = productsPrev,
+            onItemClick = {}
         )
     }
 }
 
 @Preview
 @Composable
-private fun CatalogListItemPrev() {
+private fun ListItemPrev() {
     Surface {
-        CatalogListItem(
-            item = productItemPrev
+        ListItem(
+            item = productItemPrev,
+            onClick = {}
         )
     }
 }
