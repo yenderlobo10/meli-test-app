@@ -14,7 +14,7 @@ fun NavGraphBuilder.addSearchNavGraph() {
         route = AppNavRoute.Search.path
     ) {
 
-        composable(route = "/"){
+        composable(route = "/") {
             SearchScreen(
                 searchViewModel = koinViewModel<SearchViewModel>()
             )

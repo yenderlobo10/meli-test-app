@@ -91,7 +91,8 @@ private fun LabelIndicator(
         Text(
             text = "${current + 1}/$total",
             style = MaterialTheme.typography.labelSmall.copy(
-                letterSpacing = 2.sp
+                letterSpacing = 2.sp,
+                color = Color.Black
             ),
             modifier = Modifier.padding(
                 horizontal = 6.dp,

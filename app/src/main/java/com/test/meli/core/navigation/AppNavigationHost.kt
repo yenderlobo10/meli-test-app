@@ -32,7 +32,7 @@ fun AppNavigationHost(
         startDestination = AppNavRoute.Search.path
     ) {
         addSearchNavGraph()
-        addCatalogNavGraph()
-        addProductDetailNavGraph()
+        addCatalogNavGraph { navController.popBackStack() }
+        addProductDetailNavGraph { navController.popBackStack() }
     }
 }

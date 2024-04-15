@@ -23,9 +23,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.test.meli.R
 import com.test.meli.core.presentation.theme.AppTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -78,7 +80,7 @@ fun SearchContent(
                     start.linkTo(icon.start)
                     end.linkTo(icon.end)
                 },
-                text = "Buscar productos",
+                text = stringResource(R.string.search_title),
                 style = MaterialTheme.typography.headlineSmall
             )
 
@@ -93,17 +95,19 @@ fun SearchContent(
                     },
                 value = query,
                 singleLine = true,
-                label = { Text("Buscar") },
-                placeholder = { Text("Buscar productos, marcas ...") },
+                label = { Text(stringResource(R.string.search_label)) },
+                placeholder = { Text(stringResource(R.string.search_field_query_placeholder)) },
                 isError = isValidQuery.not(),
                 supportingText = {
                     if (isValidQuery.not())
                         Text(
-                            text = when {
-                                query.isBlank() -> "Ingrese un termino de busqueda"
-                                query.length >= 3 -> "Termino de busqueda no valido"
-                                else -> "Ingrese al menos 3 caracteres"
-                            }
+                            text = stringResource(
+                                id = when {
+                                    query.isBlank() -> R.string.search_query_required_error
+                                    query.length >= 3 -> R.string.search_query_invalid_error
+                                    else -> R.string.search_query_invalid_error
+                                }
+                            )
                         )
                 },
                 onValueChange = {
@@ -124,7 +128,7 @@ fun SearchContent(
                 contentPadding = ButtonDefaults.ContentPadding,
                 onClick = onClickSearch
             ) {
-                Text("Buscar")
+                Text(stringResource(R.string.search_label))
             }
         }
     }

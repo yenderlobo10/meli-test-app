@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.test.meli.R
 import com.test.meli.catalog.domain.ProductItem
@@ -30,7 +31,8 @@ import com.test.meli.core.presentation.theme.AppTheme
 @Composable
 fun CatalogScreen(
     query: String,
-    catalogViewModel: CatalogViewModel
+    catalogViewModel: CatalogViewModel,
+    popBackStack: () -> Unit
 ) {
     val catalogState by catalogViewModel.catalogState.collectAsState()
 
@@ -41,7 +43,8 @@ fun CatalogScreen(
         products = catalogState.products,
         onProductItemClick = {
             catalogViewModel.navigateToProductDetail(it)
-        }
+        },
+        popBackStack = popBackStack
     )
 }
 
@@ -52,7 +55,8 @@ private fun CatalogScaffold(
     isLoading: Boolean,
     isError: Boolean,
     products: List<ProductItem>,
-    onProductItemClick: (item: ProductItem) -> Unit
+    onProductItemClick: (item: ProductItem) -> Unit,
+    popBackStack: () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
         rememberTopAppBarState()
@@ -61,7 +65,7 @@ private fun CatalogScaffold(
     AppTopBarScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         title = query.capitalize(),
-        onNavigationIconClick = { /*TODO*/ },
+        onNavigationIconClick = popBackStack,
         scrollBehavior = scrollBehavior,
         actions = {
             IconButton(onClick = { /*TODO*/ }) {
@@ -76,7 +80,9 @@ private fun CatalogScaffold(
             when {
                 isLoading -> LoadingView()
 
-                isError -> ErrorView(message = "Error!")
+                isError -> ErrorView(
+                    message = stringResource(R.string.app_title_error_1)
+                )
 
                 else -> CatalogView(
                     products = products,
@@ -106,10 +112,11 @@ private fun CatalogScaffoldPrev() {
     AppTheme {
         CatalogScaffold(
             query = "query input search",
-            isLoading = true,
+            isLoading = false,
             isError = true,
             products = productsPrev,
-            onProductItemClick = {}
+            onProductItemClick = {},
+            popBackStack = {}
         )
     }
 }

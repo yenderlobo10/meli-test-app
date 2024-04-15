@@ -21,10 +21,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.test.meli.R
 import com.test.meli.core.extensions.capitalizeWords
 import com.test.meli.core.extensions.toCurrencyFormat
 import com.test.meli.core.presentation.components.AppTopBarScaffold
@@ -38,15 +40,16 @@ import com.test.meli.productdetail.presentation.components.ProductAttributes
 
 @Composable
 fun ProductDetailScreen(
-    id: String,
-    productDetailViewModel: ProductDetailViewModel
+    productDetailViewModel: ProductDetailViewModel,
+    popBackStack: () -> Unit
 ) {
     val detailState by productDetailViewModel.detailState.collectAsState()
 
     ProductDetailScaffold(
         isLoading = detailState.isLoading,
         isError = detailState.isError,
-        productDetail = detailState.detail
+        productDetail = detailState.detail,
+        popBackStack = popBackStack
     )
 }
 
@@ -54,7 +57,8 @@ fun ProductDetailScreen(
 fun ProductDetailScaffold(
     isLoading: Boolean,
     isError: Boolean,
-    productDetail: ProductDetail?
+    productDetail: ProductDetail?,
+    popBackStack: () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
         rememberTopAppBarState()
@@ -63,7 +67,7 @@ fun ProductDetailScaffold(
     AppTopBarScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         title = "",
-        onNavigationIconClick = { /*TODO*/ },
+        onNavigationIconClick = popBackStack,
         scrollBehavior = scrollBehavior,
         actions = {
             IconButton(onClick = { /*TODO*/ }) {
@@ -78,7 +82,7 @@ fun ProductDetailScaffold(
             isLoading -> LoadingView()
 
             isError.or(productDetail == null) -> ErrorView(
-                message = "Error product detail"
+                message = stringResource(R.string.app_title_error_2)
             )
 
             else -> ProductDetailView(
@@ -134,6 +138,7 @@ private fun ProductDetailScaffoldPrev() {
             productDetail = productDetailPrev,
             isLoading = false,
             isError = false,
+            popBackStack = {}
         )
     }
 }

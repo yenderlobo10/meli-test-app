@@ -10,7 +10,9 @@ import com.test.meli.catalog.presentation.CatalogViewModel
 import com.test.meli.core.navigation.AppRoutes
 import org.koin.androidx.compose.koinViewModel
 
-fun NavGraphBuilder.addCatalogNavGraph() {
+fun NavGraphBuilder.addCatalogNavGraph(
+    popBackStack: () -> Unit
+) {
     val defaultRoute = "${AppRoutes.Catalog.label}/{q}"
 
     navigation(
@@ -30,7 +32,8 @@ fun NavGraphBuilder.addCatalogNavGraph() {
 
             CatalogScreen(
                 query = query,
-                catalogViewModel = koinViewModel<CatalogViewModel>()
+                catalogViewModel = koinViewModel<CatalogViewModel>(),
+                popBackStack = popBackStack
             )
         }
 

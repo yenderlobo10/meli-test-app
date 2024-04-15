@@ -10,7 +10,9 @@ import com.test.meli.productdetail.presentation.ProductDetailScreen
 import com.test.meli.productdetail.presentation.ProductDetailViewModel
 import org.koin.androidx.compose.koinViewModel
 
-fun NavGraphBuilder.addProductDetailNavGraph() {
+fun NavGraphBuilder.addProductDetailNavGraph(
+    popBackStack: () -> Unit
+) {
     val defaultRoute = "${AppRoutes.ProductDetail.label}/{id}"
 
     navigation(
@@ -28,8 +30,8 @@ fun NavGraphBuilder.addProductDetailNavGraph() {
             requireNotNull(id) { "@id argument must be not null." }
 
             ProductDetailScreen(
-                id = id,
-                productDetailViewModel = koinViewModel<ProductDetailViewModel>()
+                productDetailViewModel = koinViewModel<ProductDetailViewModel>(),
+                popBackStack = popBackStack
             )
         }
 

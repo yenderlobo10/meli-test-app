@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">MELI Test</string>
 
-    <string name="search_"></string>
+    <string name="app_title_error_1">¡Uy! Algo salió mal</string>
+    <string name="app_title_error_2">¡Vaya! Algo no funciona</string>
 
-    <string name="catalog_"></string>
+    <string name="search_title">Buscar productos</string>
+    <string name="search_label">Buscar</string>
+    <string name="search_field_query_placeholder">Buscar productos, marcas …</string>
+    <string name="search_query_required_error">Ingrese un termino de busqueda</string>
+    <string name="search_query_length_error">Ingrese al menos 3 caracteres</string>
+    <string name="search_query_invalid_error">Termino de busqueda no valido</string>
 
-    <string name="detail_"></string>
+    <string name="catalog_title_results">%1$s resultados</string>
+
+    <string name="detail_attributes_title">Características</string>
 </resources>

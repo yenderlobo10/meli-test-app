@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,8 +52,14 @@ internal fun ListView(
     ) {
         item {
             Text(
-                text = "${items.size} resultados",
-                modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
+                text = stringResource(
+                    R.string.catalog_title_results,
+                    items.size
+                ),
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    bottom = 16.dp
+                )
             )
         }
         items(
